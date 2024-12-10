@@ -10,7 +10,7 @@
         body {
             margin: 0;
             padding: 0;
-            background: #333;
+            background: black;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -20,26 +20,27 @@
 
         #flipbook-container {
             width: 90vw;
-            max-width: 1414px;
+            max-width: 1200px;
             height: 90vh;
-            max-height: 2000px;
-            margin: auto;
+            max-height: 800px;
             position: relative;
         }
 
         #flipbook {
             width: 100%;
             height: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
         }
 
         .page {
             background-color: white;
+            border: 1px solid #ccc;
         }
 
         .page img {
             width: 100%;
             height: 100%;
-            object-fit: contain;
+            object-fit: cover;
         }
 
         #controls {
@@ -47,24 +48,21 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0, 0, 0, 0.7);
-            padding: 10px 20px;
-            border-radius: 20px;
-            z-index: 1000;
+            display: flex;
+            gap: 20px;
         }
 
         button {
             background: white;
             border: none;
-            padding: 8px 15px;
-            margin: 0 5px;
+            padding: 8px 20px;
             border-radius: 5px;
             cursor: pointer;
             font-size: 16px;
         }
 
         button:hover {
-            background: #eee;
+            background: #ddd;
         }
 
         .loading {
@@ -119,16 +117,22 @@
 
         function initializeFlipbook() {
             $('#flipbook').turn({
-                width: '100%',
-                height: '100%',
+                width: 1200, // Fixed size for better design consistency
+                height: 800,
                 autoCenter: true,
                 elevation: 50,
                 gradients: true,
                 acceleration: true,
-                display: 'double',
+                display: 'single', // Starts as single for cover
                 when: {
                     turning: function(event, page, view) {
-                        // Add any custom logic for page turning
+                        // Change display mode after the first page
+                        if (page === 2) {
+                            $('#flipbook').turn('display', 'double');
+                        }
+                        if (page === 1) {
+                            $('#flipbook').turn('display', 'single');
+                        }
                     }
                 }
             });
@@ -149,3 +153,4 @@
     </script>
 </body>
 </html>
+
